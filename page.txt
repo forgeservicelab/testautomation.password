@@ -1,0 +1,18 @@
+*** Settings ***
+Suite Setup    Go to homepage
+#Suite Teardown    Close All Browsers
+Resource    ./common/assets/secrets.txt
+Resource    ./common/assets/resource.txt
+Resource    local_resource.txt
+
+*** Variables ***
+${USER}    ${VALID_USER}
+${PASSWORD}    ${VALID_PASSWORD}
+
+*** Test Cases ***
+Validate Password page
+    Wait Until Page Contains    Password change
+Validate Reset Page
+    Click Element    link=Email a password reset link
+    Wait Until Page Contains    When you receive the email, click the link inside to complete the password reset
+*** Keywords ***
