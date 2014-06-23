@@ -1,0 +1,36 @@
+*** Settings ***
+Suite Setup    Go to homepage
+Suite Teardown    Close All Browsers
+Resource    ./common/assets/secrets.txt
+Resource    ./common/assets/resource.txt
+Resource    local_resource.txt
+
+*** Variables ***
+${USER}    ${VALID_USER}
+${PASSWORD}    ${VALID_PASSWORD}
+
+*** Test Cases ***
+No Old Password
+    Input Text    name=login    ${USER}
+    Click Element    css=input[type="submit"]
+    Wait Until Page Contains    Your old password is required
+No New Password
+    Input Text    name=login    ${USER}
+    Input Text    name=oldpassword    ${PASSWORD}
+    Click Element    css=input[type="submit"]
+    Wait Until Page Contains    Your new password is required
+New Passwords mismatch
+    Input Text    name=login    ${USER}
+    Input Text    name=oldpassword    ${PASSWORD}
+    Input Text    name=newpassword    test
+    Input Text    name=confirmpassword    testmismatch
+    Click Element    css=input[type="submit"]
+    Wait Until Page Contains    Passwords mismatch
+Captcha Not Entered
+    Input Text    name=login    ${USER}
+    Input Text    name=oldpassword    ${PASSWORD}
+    Input Text    name=newpassword    test
+    Input Text    name=confirmpassword    test
+    Click Element    css=input[type="submit"]
+    Wait Until Page Contains    The reCAPTCHA was not entered correctly. Try again.
+*** Keywords ***
