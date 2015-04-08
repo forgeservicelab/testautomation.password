@@ -10,27 +10,46 @@ ${USER}    ${VALID_USER}
 ${PASSWORD}    ${VALID_PASSWORD}
 
 *** Test Cases ***
-No Old Password
+Password reset No Old Password
     Input Text    name=login    ${USER}
     Click Element    css=input[type="submit"]
     Wait Until Page Contains    Your old password is required
-No New Password
+Password reset No New Password
     Input Text    name=login    ${USER}
     Input Text    name=oldpassword    ${PASSWORD}
     Click Element    css=input[type="submit"]
     Wait Until Page Contains    Your new password is required
-New Passwords mismatch
+Password reset New Passwords mismatch
     Input Text    name=login    ${USER}
     Input Text    name=oldpassword    ${PASSWORD}
     Input Text    name=newpassword    test
     Input Text    name=confirmpassword    testmismatch
     Click Element    css=input[type="submit"]
     Wait Until Page Contains    Passwords mismatch
-Captcha Not Entered
+Password reset Captcha Not Entered
     Input Text    name=login    ${USER}
     Input Text    name=oldpassword    ${PASSWORD}
     Input Text    name=newpassword    test
     Input Text    name=confirmpassword    test
     Click Element    css=input[type="submit"]
     Wait Until Page Contains    The reCAPTCHA was not entered correctly. Try again.
+Password Change Login missing
+    Click Link    Email a password reset link
+    Page Should Contain    Enter your user name and your email address to reset your password.
+    Input Text    name=login    ${EMPTY}
+    Input Text    name=mail     mail
+    Click Element    css=input[type="submit"]
+    Page Should Contain    Your login is required
+Password Change Email missing
+    Input Text    name=login    loginname
+    Input Text    name=mail     ${EMPTY}
+    Click Element    css=input[type="submit"]
+    Page Should Contain    Your email address is required
+Password Change Captcha missing
+    Input Text    name=login    loginname
+    Input Text    name=mail     emailaddress
+    Click Element    css=input[type="submit"]
+    Page Should Contain    The reCAPTCHA was not entered correctly. Try again.
+    
+
 *** Keywords ***
