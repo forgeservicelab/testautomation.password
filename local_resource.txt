@@ -1,5 +1,12 @@
+*** Settings ***
+Library           uuid
+
 *** Variables ***
+#${SELENIUM_HOST}    localhost
+${SELENIUM_HOST}    ci.forgeservicelab.fi
+${SELENIUM_PORT}    4444
 
 *** Keywords ***
 Go to homepage
-    Open Browser    ${PASSWORD_URL}    ${BROWSER}    
+    Open Browser    ${PASSWORD_URL}    ${BROWSER}    remote_url=http://${SELENIUM_HOST}:${SELENIUM_PORT}/wd/hub
+#    Open Browser    ${PASSWORD_URL}    ${BROWSER}    
